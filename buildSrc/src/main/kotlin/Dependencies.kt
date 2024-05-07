@@ -24,6 +24,16 @@ object Dependencies {
         }
     }
 
+    object Kotlin {
+        const val REFLECT = "org.jetbrains.kotlin:kotlin-reflect:${Versions.KOTLIN}"
+        const val STDLIB_JDK8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.KOTLIN}"
+    }
+
+    object Jackson {
+        const val MODULE_KOTLIN = "com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.JACKSON}"
+        const val DATATYPE_JSR310 = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${Versions.JACKSON}"
+    }
+
     object JWT {
         const val JWT_API = "io.jsonwebtoken:jjwt-api:${Versions.JWT}"
         const val JWT_IMPL = "io.jsonwebtoken:jjwt-impl:${Versions.JWT}"
@@ -38,5 +48,13 @@ object Dependencies {
     object Querydsl {
         const val JPA = "com.querydsl:querydsl-jpa:${Versions.QUERYDSL}:jakarta"
         const val APT = "com.querydsl:querydsl-apt:${Versions.QUERYDSL}:jakarta"
+    }
+
+    object Firebase {
+        const val FIREBASE_ADMIN = "com.google.firebase:firebase-admin:${Versions.FIREBASE_ADMIN}"
+    }
+
+    object Google {
+        const val GSON = "com.google.code.gson:gson:${Versions.GSON}"
     }
 }

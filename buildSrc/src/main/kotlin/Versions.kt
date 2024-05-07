@@ -4,6 +4,10 @@ object Versions {
 
     const val KOTLIN = "1.9.23"
     const val JAVA = "21"
+    const val KTLINT = "11.0.0"
+    const val KSP = "1.9.23-1.0.20"
+
+    const val JACKSON = "2.15.2"
 
     const val JWT = "4.4.0"
     const val GSON = "2.10.1"
