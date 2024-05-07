@@ -16,7 +16,7 @@ object Versions {
 
     const val QUERYDSL = "5.1.0"
 
-    const val MYSQL = "8.0.35"
+    const val MYSQL = "8.0.32"
 
     const val REST_ASSURED = "5.4.0"
 

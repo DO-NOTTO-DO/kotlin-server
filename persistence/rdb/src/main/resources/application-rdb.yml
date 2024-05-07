@@ -1,0 +1,75 @@
+server:
+  shutdown: graceful
+spring:
+  jpa:
+    open-in-view: false
+---
+spring:
+  profiles:
+    active: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/nottodo?allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        enable_lazy_load_no_trans: false
+        default_batch_fetch_size: 100
+        order_inserts: true
+        order_updates: true
+        query.in_clause_parameter_padding: true
+---
+spring:
+  profiles:
+    active: prod
+  config:
+    import:
+      - application-secret-rdb
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        enable_lazy_load_no_trans: false
+        default_batch_fetch_size: 100
+        order_inserts: true
+        order_updates: true
+        query.in_clause_parameter_padding: true
+---
+spring:
+  profiles:
+    active: test
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:mem://localhost/~/nottodo;MODE=MYSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false;DB_CLOSE_ON_EXIT=false;TIME ZONE=Asia/Seoul
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: true
+        enable_lazy_load_no_trans: false
+        default_batch_fetch_size: 100
+        order_inserts: true
+        order_updates: true
+        query.in_clause_parameter_padding: true
+  h2:
+    console:
+      enabled: true

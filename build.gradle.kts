@@ -1,61 +1,89 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.2.5"
-    id("io.spring.dependency-management") version "1.1.4"
-    id("org.asciidoctor.jvm.convert") version "3.3.2"
-    kotlin("jvm") version "1.9.23"
-    kotlin("plugin.spring") version "1.9.23"
-    kotlin("plugin.jpa") version "1.9.23"
+    id(Plugins.Id.SPRING_BOOT) version Versions.SPRING_BOOT apply false
+    id(Plugins.Id.SPRING_DEPENDENCY_MANAGEMENT) version Versions.SPRING_DEPENDENCY_MANAGEMENT
+    id(Plugins.Id.KSP) version Versions.KSP
+    id(Plugins.Id.KTLINT) version Versions.KTLINT
+    id(Plugins.Id.KTLINT_IDEA) version Versions.KTLINT
+    id(Plugins.Id.ASCII_DOCTOR) version Versions.ASCII_DOCTOR
+
+    kotlin(Plugins.Modules.JVM) version Versions.KOTLIN
+    kotlin(Plugins.Modules.SPRING) version Versions.KOTLIN
+    kotlin(Plugins.Modules.JPA) version Versions.KOTLIN apply false
+    kotlin(Plugins.Modules.KAPT) version Versions.KOTLIN
 }
 
-group = "kr.co.nottodo"
-version = "0.0.1-SNAPSHOT"
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-}
-
-repositories {
-    mavenCentral()
-}
-
-extra["snippetsDir"] = file("build/generated-snippets")
-
-dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-batch")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
-    runtimeOnly("com.h2database:h2")
-    runtimeOnly("com.mysql:mysql-connector-j")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.batch:spring-batch-test")
-    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-    testImplementation("org.springframework.security:spring-security-test")
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "17"
+buildscript {
+    dependencies {
+        classpath(kotlin(Plugins.Modules.GRADLE_PLUGIN, Versions.KOTLIN))
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
-tasks.test {
-    outputs.dir(project.extra["snippetsDir"]!!)
+allprojects {
+    apply {
+        plugin<JavaLibraryPlugin>()
+        plugin(Plugins.Id.KOTLIN_JVM)
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom(configurations.annotationProcessor.get())
+        }
+    }
+
+    tasks.withType<Test> {
+        maxHeapSize = "2048M"
+        jvmArgs("-Dspring.test.context.cache.maxSize=1")
+        useJUnitPlatform()
+    }
 }
 
-tasks.asciidoctor {
-    inputs.dir(project.extra["snippetsDir"]!!)
-    dependsOn(tasks.test)
+subprojects {
+    dependencies {
+        implementation(Dependencies.Kotlin.REFLECT)
+        implementation(Dependencies.Kotlin.STDLIB_JDK8)
+
+        implementation(Dependencies.Google.GSON)
+    }
+
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = listOf("-Xjsr305=strict")
+            jvmTarget = Versions.JAVA
+        }
+    }
+}
+
+val springProjects = listOf(
+    projects.common,
+    projects.commonSpring,
+    projects.application.mission,
+    projects.persistence.rdb
+).map { it.dependencyProject }
+
+configure(springProjects) {
+    apply {
+        plugin(Plugins.Id.SPRING_BOOT)
+        plugin(Plugins.Id.SPRING_DEPENDENCY_MANAGEMENT)
+    }
+
+    dependencies {
+        implementation(Dependencies.Spring.Boot.WEB)
+
+        implementation(Dependencies.Spring.Boot.VALIDATION)
+        implementation(Dependencies.Spring.Boot.CONFIGURATION_PROCESSOR)
+        annotationProcessor(Dependencies.Spring.Boot.CONFIGURATION_PROCESSOR)
+
+        testRuntimeOnly(Dependencies.Database.H2)
+    }
 }

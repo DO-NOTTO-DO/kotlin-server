@@ -1,0 +1,3 @@
+[submodule "server-secret"]
+	path = server-secret
+	url = https://github.com/DO-NOTTO-DO/server-secret.git
