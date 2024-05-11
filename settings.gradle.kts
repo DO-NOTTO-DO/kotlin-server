@@ -9,7 +9,7 @@ pluginManagement {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(
-    "commonSpring",
+    "common-spring",
     "common",
 
     "api",

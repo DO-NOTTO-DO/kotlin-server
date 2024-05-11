@@ -27,27 +27,27 @@ spring:
         order_updates: true
         query.in_clause_parameter_padding: true
 ---
-spring:
-  profiles:
-    active: prod
-  config:
-    import:
-      - application-secret-rdb
-  jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
-    hibernate:
-      ddl-auto: none
-    show-sql: false
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQLDialect
-        enable_lazy_load_no_trans: false
-        default_batch_fetch_size: 100
-        order_inserts: true
-        order_updates: true
-        query.in_clause_parameter_padding: true
----
+#spring:
+#  profiles:
+#    active: prod
+#  config:
+#    import:
+#      - application-secret-rdb
+#  jpa:
+#    database-platform: org.hibernate.dialect.MySQLDialect
+#    hibernate:
+#      ddl-auto: none
+#    show-sql: false
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        dialect: org.hibernate.dialect.MySQLDialect
+#        enable_lazy_load_no_trans: false
+#        default_batch_fetch_size: 100
+#        order_inserts: true
+#        order_updates: true
+#        query.in_clause_parameter_padding: true
+#---
 spring:
   profiles:
     active: test
