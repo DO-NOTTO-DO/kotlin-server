@@ -10,7 +10,7 @@ import jakarta.persistence.Id
 class Quote private constructor(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    private val id: Long? = null,
 
     @Column
     private val description: String,

@@ -7,7 +7,7 @@ import kr.co.nottodo.persistence.rdb.domain.base.BaseEntity
 class User private constructor(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    private val id: Long? = null,
 
     @Column
     private val email: String,

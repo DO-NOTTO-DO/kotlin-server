@@ -7,7 +7,7 @@ import kr.co.nottodo.persistence.rdb.domain.base.BaseEntity
 class Action private constructor(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    private val id: Long? = null,
 
     @Column
     private val name: String,

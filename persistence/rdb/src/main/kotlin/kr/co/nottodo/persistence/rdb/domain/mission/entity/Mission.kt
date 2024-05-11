@@ -25,8 +25,8 @@ class Mission private constructor(
 ) : BaseEntity() {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mission", cascade = [CascadeType.PERSIST])
-    val dailyMissions: List<DailyMission> = mutableListOf()
+    val dailyMissions: MutableList<DailyMission> = mutableListOf()
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "action", cascade = [CascadeType.PERSIST])
-    val actions: List<Action> = mutableListOf()
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mission", cascade = [CascadeType.PERSIST])
+    val actions: MutableList<Action> = mutableListOf()
 }
