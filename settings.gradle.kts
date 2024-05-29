@@ -15,6 +15,7 @@ include(
     "api",
 
     "application:mission",
+    "application:quote",
 
     "persistence:rdb",
 )

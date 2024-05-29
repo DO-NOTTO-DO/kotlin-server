@@ -20,7 +20,7 @@ tasks.getByName<BootJar>("bootJar") {
 }
 
 allOpen {
-    annotation("kr.co.nottodo.persistence.rdb.config.annotation.AllOpen")
+    annotation("nottodo.persistence.rdb.config.annotation.AllOpen")
     annotation("jakarta.persistence.Entity")
 }
 
@@ -39,7 +39,7 @@ dependencies {
 
     implementation(Dependencies.Jackson.DATATYPE_JSR310)
     implementation(Dependencies.Jackson.MODULE_KOTLIN)
-    implementation(Dependencies.Spring.Boot.SECURITY)
+//    implementation(Dependencies.Spring.Boot.SECURITY)
 
     api(Dependencies.Spring.Boot.DATA_JPA)
     api(Dependencies.Querydsl.JPA)

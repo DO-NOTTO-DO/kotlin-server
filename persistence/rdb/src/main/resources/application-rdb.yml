@@ -3,19 +3,43 @@ server:
 spring:
   jpa:
     open-in-view: false
+
 ---
 spring:
-  profiles:
-    active: local
+  config:
+    activate:
+      on-profile: local
   datasource:
-    url: jdbc:mysql://localhost:3306/nottodo?allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3307/nottodo?allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        enable_lazy_load_no_trans: false
+        default_batch_fetch_size: 100
+        order_inserts: true
+        order_updates: true
+        query.in_clause_parameter_padding: true
+
+---
+spring:
+  config:
+    import:
+      - optional:application-secret-rdb
+    activate:
+      on-profile: prod
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: none
     show-sql: false
     properties:
       hibernate:
@@ -26,31 +50,12 @@ spring:
         order_inserts: true
         order_updates: true
         query.in_clause_parameter_padding: true
+
 ---
-#spring:
-#  profiles:
-#    active: prod
-#  config:
-#    import:
-#      - application-secret-rdb
-#  jpa:
-#    database-platform: org.hibernate.dialect.MySQLDialect
-#    hibernate:
-#      ddl-auto: none
-#    show-sql: false
-#    properties:
-#      hibernate:
-#        format_sql: true
-#        dialect: org.hibernate.dialect.MySQLDialect
-#        enable_lazy_load_no_trans: false
-#        default_batch_fetch_size: 100
-#        order_inserts: true
-#        order_updates: true
-#        query.in_clause_parameter_padding: true
-#---
 spring:
-  profiles:
-    active: test
+  config:
+    activate:
+      on-profile: test
   datasource:
     hikari:
       driver-class-name: org.h2.Driver
@@ -73,3 +78,4 @@ spring:
   h2:
     console:
       enabled: true
+---

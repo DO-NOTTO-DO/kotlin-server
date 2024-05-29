@@ -69,6 +69,7 @@ val springProjects = listOf(
     projects.commonSpring,
     projects.api,
     projects.application.mission,
+    projects.application.quote,
     projects.persistence.rdb
 ).map { it.dependencyProject }
 

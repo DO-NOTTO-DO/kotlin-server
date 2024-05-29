@@ -22,14 +22,14 @@ dependencies {
     implementation(projects.persistence.rdb)
 
     implementation(projects.application.mission)
-
+    implementation(projects.application.quote)
 
     implementation(projects.common)
     implementation(projects.commonSpring)
 
     implementation(Dependencies.Spring.Boot.WEB)
 
-    implementation(Dependencies.Spring.Boot.SECURITY)
+//    implementation(Dependencies.Spring.Boot.SECURITY)
     implementation(Dependencies.Spring.Boot.JAKARTA_XML)
 
     testImplementation(Dependencies.Spring.Rest.REST_ASSURED)
