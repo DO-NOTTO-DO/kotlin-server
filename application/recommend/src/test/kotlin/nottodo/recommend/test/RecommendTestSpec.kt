@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.ActiveProfiles
 
-@SpringBootTest(classes = [RecommendConfig::class])
+@SpringBootTest(classes = [RecommendConfig::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @EnableAutoConfiguration
 @Import(RecommendConfig::class)
