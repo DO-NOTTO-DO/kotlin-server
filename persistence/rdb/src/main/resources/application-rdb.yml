@@ -7,18 +7,15 @@ spring:
 ---
 spring:
   config:
+    import:
+      - optional:application-secret-rdb
     activate:
-      on-profile: local
-  datasource:
-    url: jdbc:mysql://localhost:3307/nottodo?allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
+      on-profile: prod
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: create
-    show-sql: true
+      ddl-auto: none
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -32,15 +29,18 @@ spring:
 ---
 spring:
   config:
-    import:
-      - optional:application-secret-rdb
     activate:
-      on-profile: prod
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3307/nottodo?allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: none
-    show-sql: false
+      ddl-auto: update
+    show-sql: true
     properties:
       hibernate:
         format_sql: true
@@ -78,4 +78,3 @@ spring:
   h2:
     console:
       enabled: true
----

@@ -27,10 +27,19 @@ allOpen {
 val copyYml = tasks.register<Copy>("copyYml") {
     from("../../server-secret/application-secret-rdb.yml")
     into("src/main/resources/")
+
+    doLast {
+        val file = file("src/main/resources/application-secret-rdb.yml")
+        if (file.exists()) {
+            file.delete()
+        }
+    }
 }
 
 tasks.processResources {
-    dependsOn(copyYml)
+    if (project.hasProperty("spring.profiles.active") && project.property("spring.profiles.active") == "prod") {
+        dependsOn(copyYml)
+    }
 }
 
 dependencies {

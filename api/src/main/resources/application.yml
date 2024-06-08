@@ -2,6 +2,5 @@ spring:
   config:
     import:
       - application-rdb.yml
-      - optional:application-secret-rdb.yml
   profiles:
     active: local
