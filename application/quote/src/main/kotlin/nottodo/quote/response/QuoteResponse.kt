@@ -1,4 +1,4 @@
-package nottodo.application.quote.response
+package nottodo.quote.response
 
 import nottodo.common.converter.NonNullConverter
 import nottodo.persistence.rdb.domain.quote.entity.Quote

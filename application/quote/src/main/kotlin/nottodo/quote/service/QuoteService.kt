@@ -1,8 +1,8 @@
-package nottodo.application.quote.service
+package nottodo.quote.service
 
 import nottodo.common.random.RandomPickUtil
 import nottodo.persistence.rdb.domain.quote.repository.QuoteRepository
-import nottodo.application.quote.response.QuoteResponse
+import nottodo.quote.response.QuoteResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

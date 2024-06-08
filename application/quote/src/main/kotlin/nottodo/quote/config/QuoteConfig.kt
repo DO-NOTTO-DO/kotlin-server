@@ -1,4 +1,4 @@
-package nottodo.application.quote.config
+package nottodo.quote.config
 
 import nottodo.persistence.rdb.config.JpaConfig
 import org.springframework.context.annotation.ComponentScan
