@@ -6,16 +6,16 @@ import jakarta.persistence.*
 class RecommendAction private constructor(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null,
+    val id: Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recommend_mission_id")
-    private val recommendMission: RecommendMission,
+    val recommendMission: RecommendMission,
 
     @Column(unique = true)
-    private var name: String,
+    val name: String,
 
     @Column
-    private val description: String,
+    val description: String,
 ) {
 }
