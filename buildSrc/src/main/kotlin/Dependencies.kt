@@ -7,7 +7,6 @@ object Dependencies {
             const val CONFIGURATION_PROCESSOR = "org.springframework.boot:spring-boot-configuration-processor"
             const val SECURITY = "org.springframework.boot:spring-boot-starter-security"
             const val JAKARTA_XML = "jakarta.xml.bind:jakarta.xml.bind-api"
-            const val TEST = "org.springframework.boot:spring-boot-starter-test"
         }
 
         object Batch {
@@ -22,6 +21,14 @@ object Dependencies {
             const val MOCK_MVC = "org.springframework.restdocs:spring-restdocs-mockmvc"
             const val ASCII_DOCTOR = "org.springframework.restdocs:spring-restdocs-asciidoctor"
         }
+    }
+
+    object Test {
+        const val KOTEST_JUNIT5 = "io.kotest:kotest-runner-junit5-jvm:${Versions.KOTEST}"
+        const val KOTEST_CORE = "io.kotest:kotest-assertions-core:${Versions.KOTEST}"
+        const val KOTEST_SPRING = "io.kotest.extensions:kotest-extensions-spring:${Versions.KOTEST_SPRING}"
+        const val MOCKK = "io.mockk:mockk:${Versions.MOCKK}"
+        const val TEST = "org.springframework.boot:spring-boot-starter-test"
     }
 
     object Kotlin {

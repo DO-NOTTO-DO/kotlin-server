@@ -1,16 +1,16 @@
-package nottodo.quote.config
+package nottodo.recommend.config
 
 import nottodo.persistence.rdb.config.JpaConfig
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 
-@ComponentScan("nottodo.quote")
+@ComponentScan("nottodo.recommend")
 @Import(
     value = [
-        JpaConfig::class
+        JpaConfig::class,
     ]
 )
 @Configuration
-class QuoteConfig {
+class RecommendConfig {
 }

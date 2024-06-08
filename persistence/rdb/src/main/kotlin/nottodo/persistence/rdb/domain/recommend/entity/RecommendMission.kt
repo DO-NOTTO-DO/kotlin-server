@@ -1,11 +1,6 @@
 package nottodo.persistence.rdb.domain.recommend.entity
 
-import jakarta.persistence.CascadeType
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
 @Entity
 class RecommendMission private constructor(
@@ -25,4 +20,20 @@ class RecommendMission private constructor(
     @Column
     val image: String,
 ) {
+    companion object {
+        fun of(
+            title: String,
+            situation: String,
+            description: String,
+            image: String,
+        ): RecommendMission {
+            return RecommendMission(
+                id = null,
+                title = title,
+                situation = situation,
+                description = description,
+                image = image
+            )
+        }
+    }
 }

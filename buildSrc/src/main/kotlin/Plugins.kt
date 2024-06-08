@@ -7,6 +7,7 @@ object Plugins {
         const val KOTLIN_JVM = "org.jetbrains.kotlin.jvm"
         const val KSP = "com.google.devtools.ksp"
         const val ASCII_DOCTOR = "org.asciidoctor.jvm.convert"
+        const val TEST_FIXTURES = "java-test-fixtures"
     }
 
     object Modules {

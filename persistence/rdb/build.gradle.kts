@@ -2,6 +2,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id(Plugins.Id.SPRING_BOOT)
+    id(Plugins.Id.TEST_FIXTURES)
 
     kotlin(Plugins.Modules.SPRING)
     kotlin(Plugins.Modules.JPA)
@@ -56,4 +57,7 @@ dependencies {
 
     runtimeOnly(Dependencies.Database.H2)
     runtimeOnly(Dependencies.Database.MYSQLDB)
+
+    testFixturesImplementation(projects.commonSpring)
+    testFixturesImplementation(Dependencies.Test.TEST)
 }

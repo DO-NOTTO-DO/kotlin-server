@@ -18,4 +18,6 @@ dependencies {
 
     implementation(projects.common)
     implementation(projects.commonSpring)
+
+    testImplementation(testFixtures(projects.persistence.rdb))
 }

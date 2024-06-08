@@ -18,4 +18,17 @@ class RecommendAction private constructor(
     @Column
     val description: String,
 ) {
+    companion object {
+        fun of(
+            recommendMission: RecommendMission,
+            name: String,
+            description: String,
+        ): RecommendAction {
+            return RecommendAction(
+                recommendMission = recommendMission,
+                name = name,
+                description = description
+            )
+        }
+    }
 }

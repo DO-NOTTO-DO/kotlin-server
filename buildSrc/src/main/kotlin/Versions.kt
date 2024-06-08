@@ -2,6 +2,10 @@ object Versions {
     const val SPRING_DEPENDENCY_MANAGEMENT = "1.1.4"
     const val SPRING_BOOT = "3.2.5"
 
+    const val KOTEST = "5.8.1"
+    const val KOTEST_SPRING = "1.3.0"
+    const val MOCKK = "1.12.4"
+
     const val KOTLIN = "1.9.23"
     const val JAVA = "21"
     const val KTLINT = "11.0.0"

@@ -88,5 +88,10 @@ configure(springProjects) {
         annotationProcessor(Dependencies.Spring.Boot.CONFIGURATION_PROCESSOR)
 
         testRuntimeOnly(Dependencies.Database.H2)
+        testImplementation(Dependencies.Test.TEST)
+        testImplementation(Dependencies.Test.KOTEST_JUNIT5)
+        testImplementation(Dependencies.Test.KOTEST_CORE)
+        testImplementation(Dependencies.Test.KOTEST_SPRING)
+        testImplementation(Dependencies.Test.MOCKK)
     }
 }
