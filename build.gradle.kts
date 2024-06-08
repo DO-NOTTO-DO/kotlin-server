@@ -70,6 +70,7 @@ val springProjects = listOf(
     projects.api,
     projects.application.mission,
     projects.application.quote,
+    projects.application.recommend,
     projects.persistence.rdb
 ).map { it.dependencyProject }
 
