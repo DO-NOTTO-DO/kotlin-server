@@ -6,28 +6,23 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
 
 @Entity
 class RecommendMission private constructor(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null,
+    val id: Long? = null,
 
     @Column
-    private val title: String,
+    val title: String,
 
     @Column
-    private val situation: String,
+    val situation: String,
 
     @Column
-    private val description: String,
+    val description: String,
 
     @Column
-    private val image: String,
+    val image: String,
 ) {
-
-    @OneToMany(mappedBy = "recommendMission", cascade = [CascadeType.PERSIST])
-    private val recommendActions: MutableList<RecommendAction> = mutableListOf()
-
 }
