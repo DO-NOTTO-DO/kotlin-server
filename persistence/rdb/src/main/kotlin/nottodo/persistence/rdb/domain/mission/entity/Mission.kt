@@ -8,16 +8,16 @@ import nottodo.persistence.rdb.domain.user.entity.User
 class Mission private constructor(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null,
+    val id: Long? = null,
 
     @Column
-    private var title: String,
+    var title: String,
 
     @Column
-    private var situation: String,
+    var situation: String,
 
     @Column
-    private var goal: String,
+    var goal: String,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

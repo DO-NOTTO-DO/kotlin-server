@@ -8,17 +8,17 @@ import java.time.LocalDate
 class DailyMission private constructor(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null,
+    val id: Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mission_id")
-    private val mission: Mission,
+    val mission: Mission,
 
     @Column
-    private val date: LocalDate,
+    val date: LocalDate,
 
     @Column
     @Enumerated(EnumType.STRING)
-    private val completionStatus: CompletionStatus
+    val completionStatus: CompletionStatus
 ) : BaseEntity() {
 }

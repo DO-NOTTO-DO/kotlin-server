@@ -7,14 +7,14 @@ import nottodo.persistence.rdb.domain.base.BaseEntity
 class Action private constructor(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null,
+    val id: Long? = null,
 
     @Column
-    private val name: String,
+    val name: String,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mission_id")
-    private val mission: Mission
+    val mission: Mission
 ) : BaseEntity() {
 
     companion object {
