@@ -7,22 +7,26 @@ import nottodo.persistence.rdb.domain.base.BaseEntity
 class User private constructor(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null,
+    val id: Long? = null,
 
     @Column
-    private val email: String,
+    val email: String,
 
     @Column(unique = true)
-    private val socialId: String,
+    val socialId: String,
 
     @Column
     @Enumerated(EnumType.STRING)
-    private val socialType: SocialType,
+    val socialType: SocialType,
 
     @Column
-    private val name: String?,
+    val name: String?,
 
     @Column
-    private val image: String,
+    val image: String,
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    val role: UserRole
 ): BaseEntity() {
 }

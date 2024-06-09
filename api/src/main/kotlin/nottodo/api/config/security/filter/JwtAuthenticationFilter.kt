@@ -4,15 +4,17 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import nottodo.api.config.security.jwt.JwtTokenProvider
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.core.userdetails.UserDetailsService
+import nottodo.api.domain.user.service.CustomUserDetailsService
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 class JwtAuthenticationFilter(
     private val jwtTokenProvider: JwtTokenProvider,
-    private val userDetailsService: UserDetailsService
+    private val customUserDetailsService: CustomUserDetailsService
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(
@@ -20,9 +22,26 @@ class JwtAuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val authorizationHeader = request.getHeader(AUTHORIZATION_HEADER)
+        val token = request.getHeader(AUTHORIZATION_HEADER)
+        val authentication = getAuthentication(token)
+        if (authentication != null) {
+            SecurityContextHolder.getContext().authentication = authentication
+        }
+        filterChain.doFilter(request, response)
+    }
 
-
+    private fun getAuthentication(token: String?): Authentication? {
+        if (token.isNullOrEmpty()) {
+            return null
+        }
+        return try {
+            val emailAndSocialType = jwtTokenProvider.extractUserFromAccessToken(token)
+            val userDetails = customUserDetailsService.loadUserByEmailAndSocialType(emailAndSocialType)
+            UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
+        } catch (e: Exception) {
+            // TODO: 로깅
+            null
+        }
     }
 
     companion object {
