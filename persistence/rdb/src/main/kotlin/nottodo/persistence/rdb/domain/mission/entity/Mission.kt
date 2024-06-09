@@ -19,9 +19,8 @@ class Mission private constructor(
     @Column
     var goal: String,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    val user: User
+    @Column
+    val userId: Long
 ) : BaseEntity() {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mission", cascade = [CascadeType.PERSIST])
