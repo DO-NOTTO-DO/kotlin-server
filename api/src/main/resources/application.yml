@@ -2,5 +2,6 @@ spring:
   config:
     import:
       - application-rdb.yml
+      - application-jwt.yml
   profiles:
     active: local

@@ -18,6 +18,15 @@ tasks {
     }
 }
 
+val copyYml = tasks.register<Copy>("copyYml") {
+    from("../server-secret/application-jwt.yml")
+    into("src/main/resources/")
+}
+
+tasks.processResources {
+    dependsOn(copyYml)
+}
+
 dependencies {
     implementation(projects.persistence.rdb)
 
@@ -29,9 +38,12 @@ dependencies {
     implementation(projects.commonSpring)
 
     implementation(Dependencies.Spring.Boot.WEB)
-
     implementation(Dependencies.Spring.Boot.SECURITY)
     implementation(Dependencies.Spring.Boot.JAKARTA_XML)
+
+    implementation(Dependencies.JWT.JWT_API)
+    runtimeOnly(Dependencies.JWT.JWT_IMPL)
+    runtimeOnly(Dependencies.JWT.JWT_JACKSON)
 
     testImplementation(Dependencies.Spring.Rest.REST_ASSURED)
     testImplementation(Dependencies.Spring.RestDocs.MOCK_MVC)

@@ -49,7 +49,6 @@ dependencies {
 
     implementation(Dependencies.Jackson.DATATYPE_JSR310)
     implementation(Dependencies.Jackson.MODULE_KOTLIN)
-//    implementation(Dependencies.Spring.Boot.SECURITY)
 
     api(Dependencies.Spring.Boot.DATA_JPA)
     api(Dependencies.Querydsl.JPA)

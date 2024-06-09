@@ -13,7 +13,7 @@ object Versions {
 
     const val JACKSON = "2.15.2"
 
-    const val JWT = "4.4.0"
+    const val JWT = "0.11.5"
     const val GSON = "2.10.1"
 
     const val FIREBASE_ADMIN = "12.1.0"
