@@ -72,13 +72,20 @@ val springProjects = listOf(
     projects.application.quote,
     projects.application.recommend,
     projects.application.user,
-    projects.persistence.rdb
+    projects.persistence.rdb,
+    projects.infra.kakao
 ).map { it.dependencyProject }
 
 configure(springProjects) {
     apply {
         plugin(Plugins.Id.SPRING_BOOT)
         plugin(Plugins.Id.SPRING_DEPENDENCY_MANAGEMENT)
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom(Dependencies.Management.SPRING_CLOUD)
+        }
     }
 
     dependencies {

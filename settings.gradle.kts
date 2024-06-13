@@ -20,4 +20,6 @@ include(
     "application:user",
 
     "persistence:rdb",
+
+    "infra:kakao"
 )

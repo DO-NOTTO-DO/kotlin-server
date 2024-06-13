@@ -1,4 +1,8 @@
 object Dependencies {
+    object Management {
+        const val SPRING_CLOUD =
+            "org.springframework.cloud:spring-cloud-dependencies:${Versions.SPRING_CLOUD_DEPENDENCY_MANAGEMENT}"
+    }
     object Spring {
         object Boot {
             const val WEB = "org.springframework.boot:spring-boot-starter-web"
@@ -20,6 +24,10 @@ object Dependencies {
         object RestDocs {
             const val MOCK_MVC = "org.springframework.restdocs:spring-restdocs-mockmvc"
             const val ASCII_DOCTOR = "org.springframework.restdocs:spring-restdocs-asciidoctor"
+        }
+
+        object Cloud {
+            const val OPEN_FEIGN = "org.springframework.cloud:spring-cloud-starter-openfeign"
         }
     }
 
