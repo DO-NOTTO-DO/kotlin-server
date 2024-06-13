@@ -18,4 +18,6 @@ dependencies {
 
     implementation(projects.common)
     implementation(projects.commonSpring)
+
+    implementation(projects.infra.kakao)
 }
