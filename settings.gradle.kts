@@ -17,6 +17,7 @@ include(
     "application:mission",
     "application:quote",
     "application:recommend",
+    "application:user",
 
     "persistence:rdb",
 )

@@ -3,7 +3,6 @@ package nottodo.api.domain.user.service
 import nottodo.api.config.security.CustomUserDetails
 import nottodo.api.config.security.jwt.dto.EmailAndSocialType
 import nottodo.persistence.rdb.domain.user.repository.UserAuthenticationRepository
-import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
@@ -23,7 +22,6 @@ class CustomUserDetailsService(
             emailAndSocialType.email,
             emailAndSocialType.socialType
         )
-        val authorities = listOf(SimpleGrantedAuthority(user.role.name))
         return CustomUserDetails(user)
     }
 }
