@@ -1,6 +1,6 @@
 object Versions {
     const val SPRING_DEPENDENCY_MANAGEMENT = "1.1.4"
-    const val SPRING_CLOUD_DEPENDENCY_MANAGEMENT = "2022.0.5"
+    const val SPRING_CLOUD_DEPENDENCY_MANAGEMENT = "2023.0.1"
     const val SPRING_BOOT = "3.2.5"
 
     const val KOTEST = "5.8.1"
