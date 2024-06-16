@@ -33,6 +33,7 @@ dependencies {
     implementation(projects.application.mission)
     implementation(projects.application.quote)
     implementation(projects.application.recommend)
+    implementation(projects.application.user)
 
     implementation(projects.common)
     implementation(projects.commonSpring)
