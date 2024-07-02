@@ -20,4 +20,6 @@ dependencies {
     implementation(projects.commonSpring)
 
     implementation(projects.infra.kakao)
+
+    testImplementation(testFixtures(projects.persistence.rdb))
 }
