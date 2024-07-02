@@ -7,13 +7,19 @@ import nottodo.persistence.rdb.domain.base.BaseEntity
 class FcmToken private constructor(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null,
+    val id: Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private val user: User,
+    val user: User,
 
     @Column
-    private val token: String
+    val token: String
 ) : BaseEntity() {
+
+    companion object {
+        fun of(user: User, token: String): FcmToken {
+            return FcmToken(null, user, token)
+        }
+    }
 }

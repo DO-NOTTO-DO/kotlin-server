@@ -16,13 +16,13 @@ class RecommendAction private constructor(
     val name: String,
 
     @Column
-    val description: String,
+    val description: String?,
 ) {
     companion object {
         fun of(
             recommendMission: RecommendMission,
             name: String,
-            description: String,
+            description: String? = null,
         ): RecommendAction {
             return RecommendAction(
                 recommendMission = recommendMission,

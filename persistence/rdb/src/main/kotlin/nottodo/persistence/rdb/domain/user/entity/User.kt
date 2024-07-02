@@ -28,5 +28,19 @@ class User private constructor(
     @Column
     @Enumerated(EnumType.STRING)
     val role: UserRole
-): BaseEntity() {
+) : BaseEntity() {
+
+    companion object {
+        fun of(email: String, socialId: String, socialType: SocialType, name: String?, image: String): User {
+            return User(
+                id = null,
+                email = email,
+                socialId = socialId,
+                socialType = socialType,
+                name = name,
+                image = image,
+                role = UserRole.NORMAL
+            )
+        }
+    }
 }
