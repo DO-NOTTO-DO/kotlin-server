@@ -5,6 +5,7 @@ import nottodo.commonspring.dto.response.ApiResponseBody
 import nottodo.commonspring.dto.response.ResponseUtil
 import nottodo.mission.controller.MissionControllerPath
 import nottodo.mission.request.MissionCreateRequest
+import nottodo.mission.response.DailyMissionCompletionStatusResponse
 import nottodo.mission.response.DailyMissionResponse
 import nottodo.mission.service.DailyMissionService
 import nottodo.mission.service.MissionService
@@ -29,7 +30,7 @@ class MissionController(
         @PathVariable date: LocalDate,
         @Auth userId: Long
     ): ResponseEntity<ApiResponseBody<List<DailyMissionResponse>>> {
-        val data = dailyMissionService.getTodayDailyMissions(date, userId)
+        val data = dailyMissionService.getTodayDailyMissions(date = date, userId = userId)
         return ResponseUtil.ok(data)
     }
 
@@ -41,5 +42,14 @@ class MissionController(
         val missionId = missionService.createMission(request = request, userId = userId)
         val uri = URI.create("${MissionControllerPath.GET_MISSION}/$missionId")
         return ResponseUtil.created(data = null, uri = uri)
+    }
+
+    @GetMapping(MissionControllerPath.GET_WEEKLY_COMPLETION_STATE)
+    fun getWeeklyMissionCompletionRates(
+        @PathVariable startDate: LocalDate,
+        @Auth userId: Long
+    ): ResponseEntity<ApiResponseBody<List<DailyMissionCompletionStatusResponse>>> {
+        val data = dailyMissionService.getWeeklyMissionCompletionRates(startDate = startDate, userId = userId)
+        return ResponseUtil.ok(data)
     }
 }

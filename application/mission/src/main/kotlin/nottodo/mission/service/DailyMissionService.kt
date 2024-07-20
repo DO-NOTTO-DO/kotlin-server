@@ -21,7 +21,7 @@ class DailyMissionService(
     }
 
     @Transactional(readOnly = true)
-    fun getDailyMissionsOfWeek(startDate: LocalDate, userId: Long): List<DailyMissionCompletionStatusResponse> {
+    fun getWeeklyMissionCompletionRates(startDate: LocalDate, userId: Long): List<DailyMissionCompletionStatusResponse> {
         DateUtil.validateSunday(startDate)
         val endDate = startDate.plusDays(6)
         val dailyMissions = dailyMissionQueryRepository.findByUserIdAndDatesBetween(
