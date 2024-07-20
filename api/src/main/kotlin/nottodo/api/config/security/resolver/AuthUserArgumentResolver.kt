@@ -1,6 +1,7 @@
 package nottodo.api.config.security.resolver
 
 import nottodo.api.config.security.CustomUserDetails
+import nottodo.common.converter.NonNullConverter
 import nottodo.persistence.rdb.domain.user.entity.User
 import org.springframework.core.MethodParameter
 import org.springframework.security.core.context.SecurityContextHolder
@@ -14,7 +15,7 @@ import org.springframework.web.method.support.ModelAndViewContainer
 class AuthUserArgumentResolver: HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.getParameterAnnotation(Auth::class.java) != null && parameter.parameterType == User::class.java
+        return parameter.getParameterAnnotation(Auth::class.java) != null && parameter.parameterType == Long::class.java
     }
 
     override fun resolveArgument(
@@ -25,7 +26,7 @@ class AuthUserArgumentResolver: HandlerMethodArgumentResolver {
     ): Any? {
         val principal = SecurityContextHolder.getContext().authentication.principal
         if (principal is CustomUserDetails) {
-            return principal.getUser()
+            return NonNullConverter.convert(principal.getUser().id)
         }
         throw IllegalArgumentException("시큐리티 오류입니다.")
     }

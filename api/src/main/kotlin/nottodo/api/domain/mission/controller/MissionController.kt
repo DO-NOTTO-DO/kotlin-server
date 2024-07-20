@@ -21,9 +21,9 @@ class MissionController(
     @GetMapping(MissionControllerPath.GET_DAILY_MISSIONS)
     fun getDailyMissions(
         @PathVariable date: LocalDate,
-        @Auth user: User
+        @Auth userId: Long
     ): ResponseEntity<ApiResponseBody<List<DailyMissionResponse>>> {
-        val data = dailyMissionService.getTodayDailyMissions(date, user)
+        val data = dailyMissionService.getTodayDailyMissions(date, userId)
         return ResponseUtil.ok(data)
     }
 }
