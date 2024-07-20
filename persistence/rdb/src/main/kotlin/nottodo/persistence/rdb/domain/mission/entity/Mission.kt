@@ -23,4 +23,15 @@ class Mission private constructor(
     val userId: Long
 ) : BaseEntity() {
 
+    companion object {
+        fun of(title: String, situation: String, goal: String, userId: Long): Mission {
+            return Mission(
+                id = null,
+                title = title,
+                situation = situation,
+                goal = goal,
+                userId = userId
+            )
+        }
+    }
 }

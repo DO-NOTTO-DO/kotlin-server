@@ -1,4 +1,4 @@
-package nottodo.persistence.rdb.fixture.recommend
+package nottodo.persistence.rdb.fixture.user
 
 import nottodo.persistence.rdb.domain.user.entity.FcmToken
 import nottodo.persistence.rdb.domain.user.entity.User

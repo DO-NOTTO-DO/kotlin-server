@@ -7,8 +7,8 @@ import nottodo.common.random.RandomUtil
 import nottodo.commonspring.exception.CustomNotFoundException
 import nottodo.persistence.rdb.domain.user.repository.FcmTokenRepository
 import nottodo.persistence.rdb.domain.user.repository.UserRepository
-import nottodo.persistence.rdb.fixture.recommend.SavedFixtureFcmToken
-import nottodo.persistence.rdb.fixture.recommend.SavedFixtureUser
+import nottodo.persistence.rdb.fixture.user.SavedFixtureFcmToken
+import nottodo.persistence.rdb.fixture.user.SavedFixtureUser
 import nottodo.user.dto.FcmTokenDto
 import nottodo.user.test.UserTestSpec
 

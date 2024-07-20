@@ -21,4 +21,15 @@ class DailyMission private constructor(
     @Enumerated(EnumType.STRING)
     val completionStatus: CompletionStatus
 ) : BaseEntity() {
+
+    companion object {
+        fun of(mission: Mission, date: LocalDate, completionStatus: CompletionStatus): DailyMission {
+            return DailyMission(
+                id = null,
+                mission = mission,
+                date = date,
+                completionStatus = completionStatus
+            )
+        }
+    }
 }

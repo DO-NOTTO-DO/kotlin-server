@@ -12,4 +12,8 @@ object RandomUtil {
             .map(CHAR_POOL::get)
             .joinToString("")
     }
+
+    fun long(): Long {
+        return Random.nextLong()
+    }
 }

@@ -1,4 +1,4 @@
-package nottodo.persistence.rdb.fixture.recommend
+package nottodo.persistence.rdb.fixture.user
 
 import nottodo.common.random.RandomUtil
 import nottodo.persistence.rdb.domain.user.entity.SocialType
