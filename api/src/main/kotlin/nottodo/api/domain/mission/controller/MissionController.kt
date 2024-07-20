@@ -4,18 +4,20 @@ import nottodo.api.config.security.resolver.Auth
 import nottodo.commonspring.dto.response.ApiResponseBody
 import nottodo.commonspring.dto.response.ResponseUtil
 import nottodo.mission.controller.MissionControllerPath
+import nottodo.mission.request.DailyMissionUpdateCompletionStatusRequest
 import nottodo.mission.request.MissionCreateRequest
 import nottodo.mission.response.DailyMissionCompletionStatusResponse
 import nottodo.mission.response.DailyMissionResponse
 import nottodo.mission.service.DailyMissionService
 import nottodo.mission.service.MissionService
-import nottodo.persistence.rdb.domain.user.entity.User
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 import java.time.LocalDate
 
@@ -40,7 +42,7 @@ class MissionController(
         @Auth userId: Long
     ): ResponseEntity<ApiResponseBody<Nothing>> {
         val missionId = missionService.createMission(request = request, userId = userId)
-        val uri = URI.create("${MissionControllerPath.GET_MISSION}/$missionId")
+        val uri = URI.create("/")
         return ResponseUtil.created(data = null, uri = uri)
     }
 
@@ -51,5 +53,23 @@ class MissionController(
     ): ResponseEntity<ApiResponseBody<List<DailyMissionCompletionStatusResponse>>> {
         val data = dailyMissionService.getWeeklyMissionCompletionRates(startDate = startDate, userId = userId)
         return ResponseUtil.ok(data)
+    }
+
+    @PatchMapping(MissionControllerPath.UPDATE_DAILY_MISSION_COMPLETION_STATUS)
+    fun updateDailyMissionCompletionStatus(
+        @PathVariable dailyMissionId: Long,
+        @RequestBody request: DailyMissionUpdateCompletionStatusRequest,
+        @Auth userId: Long
+    ): ResponseEntity<ApiResponseBody<DailyMissionResponse>> {
+        val data = dailyMissionService.updateDailyMissionCompletionStatus(
+            dailyMissionId = dailyMissionId,
+            request = request,
+            userId = userId
+        )
+        val uri = UriComponentsBuilder
+            .fromUriString(MissionControllerPath.GET_DAILY_MISSION)
+            .buildAndExpand(dailyMissionId)
+            .toUri()
+        return ResponseUtil.created(data = data, uri = uri)
     }
 }

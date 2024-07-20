@@ -24,6 +24,15 @@ class DailyMission private constructor(
 
     fun isCompleted(): Boolean = completionStatus == CompletionStatus.CHECKED
 
+    fun changeCompletionStatus(completionStatus: CompletionStatus): DailyMission {
+        return DailyMission(
+            id = this.id,
+            mission = this.mission,
+            date = this.date,
+            completionStatus = completionStatus
+        )
+    }
+
     companion object {
         fun of(
             mission: Mission,
