@@ -11,13 +11,13 @@ class Mission private constructor(
     val id: Long? = null,
 
     @Column
-    var title: String,
+    val title: String,
 
     @Column
-    var situation: String,
+    val situation: String,
 
     @Column
-    var goal: String,
+    val goal: String,
 
     @Column
     val userId: Long

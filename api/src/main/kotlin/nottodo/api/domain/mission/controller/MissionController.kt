@@ -8,15 +8,11 @@ import nottodo.mission.request.DailyMissionUpdateCompletionStatusRequest
 import nottodo.mission.request.MissionCreateRequest
 import nottodo.mission.response.DailyMissionCompletionStatusResponse
 import nottodo.mission.response.DailyMissionResponse
+import nottodo.mission.response.MissionTitleResponse
 import nottodo.mission.service.DailyMissionService
 import nottodo.mission.service.MissionService
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 import java.time.LocalDate
@@ -71,5 +67,11 @@ class MissionController(
             .buildAndExpand(dailyMissionId)
             .toUri()
         return ResponseUtil.created(data = data, uri = uri)
+    }
+
+    @GetMapping(MissionControllerPath.GET_RECENT_MISSIONS)
+    fun getRecentMissionsTitle(@Auth userId: Long): ResponseEntity<ApiResponseBody<List<MissionTitleResponse>>> {
+        val data = missionService.findRecentMissionsTitle(userId)
+        return ResponseUtil.ok(data)
     }
 }
