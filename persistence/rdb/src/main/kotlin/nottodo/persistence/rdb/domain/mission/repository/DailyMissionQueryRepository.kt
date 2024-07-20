@@ -17,4 +17,11 @@ class DailyMissionQueryRepository: QuerydslRepositorySupport(DailyMission::class
             .orderBy(dailyMission.createdAt.desc())
             .fetch()
     }
+
+    fun findByUserIdAndDatesBetween(userId: Long, startDate: LocalDate, endDate: LocalDate): List<DailyMission> {
+        return from(dailyMission)
+            .leftJoin(dailyMission.mission, mission).fetchJoin()
+            .where(dailyMission.mission.userId.eq(userId), dailyMission.date.between(startDate, endDate))
+            .fetch()
+    }
 }

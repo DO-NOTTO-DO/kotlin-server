@@ -22,6 +22,8 @@ class DailyMission private constructor(
     val completionStatus: CompletionStatus
 ) : BaseEntity() {
 
+    fun isCompleted(): Boolean = completionStatus == CompletionStatus.CHECKED
+
     companion object {
         fun of(
             mission: Mission,

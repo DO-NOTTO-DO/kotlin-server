@@ -1,5 +1,6 @@
 package nottodo.mission.response
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import nottodo.common.converter.NonNullConverter
 import nottodo.persistence.rdb.domain.mission.entity.CompletionStatus
 import nottodo.persistence.rdb.domain.mission.entity.DailyMission
@@ -10,6 +11,7 @@ data class DailyMissionResponse(
     val title: String,
     val situationName: String,
     val completionStatus: CompletionStatus,
+    @JsonFormat(pattern = "yyyy-MM-dd")
     val date: LocalDate
 ) {
     companion object {
