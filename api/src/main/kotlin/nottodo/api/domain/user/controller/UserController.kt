@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import java.net.URI
 
 @RestController
 class UserController(
@@ -24,6 +25,6 @@ class UserController(
         @RequestBody request: LoginRequest
     ): ResponseEntity<ApiResponseBody<LoginResponse>> {
         val data = loginService.login(socialType, request)
-        return ResponseUtil.created(data = data, location = "/")
+        return ResponseUtil.created(data = data, uri = URI.create("/"))
     }
 }

@@ -23,7 +23,11 @@ class DailyMission private constructor(
 ) : BaseEntity() {
 
     companion object {
-        fun of(mission: Mission, date: LocalDate, completionStatus: CompletionStatus): DailyMission {
+        fun of(
+            mission: Mission,
+            date: LocalDate,
+            completionStatus: CompletionStatus = CompletionStatus.UNCHECKED
+        ): DailyMission {
             return DailyMission(
                 id = null,
                 mission = mission,

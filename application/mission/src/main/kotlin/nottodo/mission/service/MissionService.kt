@@ -3,10 +3,12 @@ package nottodo.mission.service
 import nottodo.common.converter.NonNullConverter
 import nottodo.commonspring.exception.CustomBadRequestException
 import nottodo.mission.request.MissionCreateRequest
+import nottodo.persistence.rdb.domain.mission.entity.DailyMission
 import nottodo.persistence.rdb.domain.mission.entity.Mission
 import nottodo.persistence.rdb.domain.mission.repository.DailyMissionRepository
 import nottodo.persistence.rdb.domain.mission.repository.MissionRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Service
@@ -15,6 +17,7 @@ class MissionService(
     private val dailyMissionRepository: DailyMissionRepository,
 ) {
 
+    @Transactional
     fun createMission(request: MissionCreateRequest, userId: Long): Long {
         val mission = Mission.of(
             title = request.title,
@@ -23,7 +26,13 @@ class MissionService(
             userId = userId
         )
         validateDailyMissionsCount(userId = userId, dates = request.dates)
-        return NonNullConverter.convert(missionRepository.save(mission).id)
+        val savedMission = missionRepository.save(mission)
+        val dailyMissions = request.dates.map { DailyMission.of(
+            mission = savedMission,
+            date = it,
+        ) }
+        dailyMissionRepository.saveAll(dailyMissions)
+        return NonNullConverter.convert(mission.id)
     }
 
     private fun validateDailyMissionsCount(userId: Long, dates: List<LocalDate>) {

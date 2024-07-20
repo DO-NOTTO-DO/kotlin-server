@@ -8,7 +8,7 @@ data class ApiResponseBody<T>(
 ) {
 
     companion object {
-        fun <T> success(status: Int, message: String, data: T): ApiResponseBody<T> {
+        fun <T> success(status: Int, message: String, data: T?): ApiResponseBody<T> {
             return ApiResponseBody(status, true, message, data)
         }
 

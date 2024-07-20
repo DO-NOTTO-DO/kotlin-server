@@ -10,9 +10,9 @@ object ResponseUtil {
         return ResponseEntity.ok(responseBody)
     }
 
-    fun <T> created(data: T, message: String = "성공", location: String): ResponseEntity<ApiResponseBody<T>> {
+    fun <T> created(data: T?, message: String = "성공", uri: URI): ResponseEntity<ApiResponseBody<T>> {
         val responseBody: ApiResponseBody<T> = ApiResponseBody.success(201, message, data)
-        return ResponseEntity.created(URI(location)).body(responseBody)
+        return ResponseEntity.created(uri).body(responseBody)
     }
 
     fun <T> badRequest(data: T?, message: String): ResponseEntity<ApiResponseBody<T>> {
