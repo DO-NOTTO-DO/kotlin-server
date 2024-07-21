@@ -6,6 +6,7 @@ import nottodo.commonspring.dto.response.ResponseUtil
 import nottodo.mission.controller.MissionControllerPath
 import nottodo.mission.request.DailyMissionUpdateCompletionStatusRequest
 import nottodo.mission.request.MissionCreateRequest
+import nottodo.mission.request.MissionUpdateRequest
 import nottodo.mission.response.DailyMissionCompletionStatusResponse
 import nottodo.mission.response.DailyMissionDetailResponse
 import nottodo.mission.response.DailyMissionResponse
@@ -13,6 +14,7 @@ import nottodo.mission.response.MissionTitleResponse
 import nottodo.mission.service.DailyMissionService
 import nottodo.mission.service.MissionService
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
@@ -35,10 +37,10 @@ class MissionController(
 
     @PostMapping(MissionControllerPath.CREATE_MISSION)
     fun createMission(
-        @RequestBody request: MissionCreateRequest,
+        @Validated @RequestBody request: MissionCreateRequest,
         @Auth userId: Long
     ): ResponseEntity<ApiResponseBody<Nothing>> {
-        val missionId = missionService.createMission(request = request, userId = userId)
+        val dailyMissionId = missionService.createMission(request = request, userId = userId)
         val uri = URI.create("/")
         return ResponseUtil.created(data = null, uri = uri)
     }
@@ -101,5 +103,17 @@ class MissionController(
     ): ResponseEntity<ApiResponseBody<List<String>>> {
         val data = dailyMissionService.getDailyMissionPlanDates(dailyMissionId = dailyMissionId, userId = userId)
         return ResponseUtil.ok(data)
+    }
+
+    @PutMapping(MissionControllerPath.UPDATE_MISSION)
+    fun updateMission(
+        @PathVariable dailyMissionId: Long,
+        @RequestBody request: MissionUpdateRequest,
+        @Auth userId: Long
+    ): ResponseEntity<ApiResponseBody<Nothing>> {
+        val dailyMissionId =
+            missionService.updateMission(dailyMissionId = dailyMissionId, request = request, userId = userId)
+        val uri = URI.create("/")
+        return ResponseUtil.created(data = null, uri = uri)
     }
 }

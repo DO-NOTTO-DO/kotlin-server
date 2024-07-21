@@ -4,6 +4,7 @@ import nottodo.common.converter.NonNullConverter
 import nottodo.commonspring.exception.CustomBadRequestException
 import nottodo.commonspring.exception.CustomNotFoundException
 import nottodo.mission.request.MissionCreateRequest
+import nottodo.mission.request.MissionUpdateRequest
 import nottodo.mission.response.DailyMissionDetailResponse
 import nottodo.mission.response.MissionTitleResponse
 import nottodo.persistence.rdb.domain.mission.entity.DailyMission
@@ -40,7 +41,7 @@ class MissionService(
             )
         }
         dailyMissionRepository.saveAll(dailyMissions)
-        return NonNullConverter.convert(mission.id)
+        return NonNullConverter.convert(dailyMissions[0].id)
     }
 
     private fun validateDailyMissionsCount(userId: Long, dates: List<LocalDate>) {
@@ -76,6 +77,15 @@ class MissionService(
             dailyMission = dailyMission,
             sameMissionsCount = overlappedDailyMissionsCount
         )
+    }
+
+    @Transactional
+    fun updateMission(dailyMissionId: Long, request: MissionUpdateRequest, userId: Long): Long {
+        val dailyMission = dailyMissionRepository.findByIdOrNull(dailyMissionId) ?: throw CustomNotFoundException("해당 id의 낫투두가 없습니다.")
+        if (dailyMission.mission.userId != userId) throw CustomBadRequestException("사용자의 낫투두가 아닙니다.")
+        val mission = Mission.of(dailyMission.mission.id, request.title, request.situation, request.goal, dailyMission.mission.userId)
+        missionRepository.save(mission)
+        return dailyMissionId
     }
 
     companion object {

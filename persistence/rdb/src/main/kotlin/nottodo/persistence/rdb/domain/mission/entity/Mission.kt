@@ -17,16 +17,16 @@ class Mission private constructor(
     val situation: String,
 
     @Column
-    val goal: String,
+    val goal: String?,
 
     @Column
     val userId: Long
 ) : BaseEntity() {
 
     companion object {
-        fun of(title: String, situation: String, goal: String, userId: Long): Mission {
+        fun of(id: Long? = null, title: String, situation: String, goal: String?, userId: Long): Mission {
             return Mission(
-                id = null,
+                id = id,
                 title = title,
                 situation = situation,
                 goal = goal,
