@@ -40,7 +40,7 @@ class MissionController(
         @Validated @RequestBody request: MissionCreateRequest,
         @Auth userId: Long
     ): ResponseEntity<ApiResponseBody<Nothing>> {
-        val dailyMissionId = missionService.createMission(request = request, userId = userId)
+        missionService.createMission(request = request, userId = userId)
         val uri = URI.create("/")
         return ResponseUtil.created(data = null, uri = uri)
     }
@@ -111,9 +111,14 @@ class MissionController(
         @RequestBody request: MissionUpdateRequest,
         @Auth userId: Long
     ): ResponseEntity<ApiResponseBody<Nothing>> {
-        val dailyMissionId =
-            missionService.updateMission(dailyMissionId = dailyMissionId, request = request, userId = userId)
+        missionService.updateMission(dailyMissionId = dailyMissionId, request = request, userId = userId)
         val uri = URI.create("/")
         return ResponseUtil.created(data = null, uri = uri)
+    }
+
+    @DeleteMapping(MissionControllerPath.DELETE_DAILY_MISSION)
+    fun deleteDailyMission(@PathVariable dailyMissionId: Long, @Auth userId: Long): ResponseEntity<ApiResponseBody<Nothing>> {
+        dailyMissionService.deleteDailyMission(dailyMissionId = dailyMissionId, userId = userId)
+        return ResponseUtil.ok(null)
     }
 }

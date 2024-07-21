@@ -5,7 +5,7 @@ import java.net.URI
 
 object ResponseUtil {
 
-    fun <T> ok(data: T, message: String = "성공"): ResponseEntity<ApiResponseBody<T>> {
+    fun <T> ok(data: T?, message: String = "성공"): ResponseEntity<ApiResponseBody<T>> {
         val responseBody: ApiResponseBody<T> = ApiResponseBody.success(200, message, data)
         return ResponseEntity.ok(responseBody)
     }

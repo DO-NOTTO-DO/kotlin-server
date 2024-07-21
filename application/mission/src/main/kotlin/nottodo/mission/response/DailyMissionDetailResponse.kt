@@ -7,7 +7,7 @@ data class DailyMissionDetailResponse(
     val id: Long,
     val title: String,
     val situation: String,
-    val goal: String,
+    val goal: String?,
     val count: Int
 ) {
     companion object {
