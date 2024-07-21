@@ -7,6 +7,7 @@ import nottodo.mission.controller.MissionControllerPath
 import nottodo.mission.request.DailyMissionUpdateCompletionStatusRequest
 import nottodo.mission.request.MissionCreateRequest
 import nottodo.mission.response.DailyMissionCompletionStatusResponse
+import nottodo.mission.response.DailyMissionDetailResponse
 import nottodo.mission.response.DailyMissionResponse
 import nottodo.mission.response.MissionTitleResponse
 import nottodo.mission.service.DailyMissionService
@@ -51,6 +52,15 @@ class MissionController(
         return ResponseUtil.ok(data)
     }
 
+    @GetMapping(MissionControllerPath.GET_MONTHLY_COMPLETION_STATE)
+    fun getMonthlyMissionCompletionRates(
+        @PathVariable month: String,
+        @Auth userId: Long
+    ): ResponseEntity<ApiResponseBody<List<DailyMissionCompletionStatusResponse>>> {
+        val data = dailyMissionService.getMonthlyMissionCompletionRates(yearMonthInput = month, userId = userId)
+        return ResponseUtil.ok(data)
+    }
+
     @PatchMapping(MissionControllerPath.UPDATE_DAILY_MISSION_COMPLETION_STATUS)
     fun updateDailyMissionCompletionStatus(
         @PathVariable dailyMissionId: Long,
@@ -72,6 +82,15 @@ class MissionController(
     @GetMapping(MissionControllerPath.GET_RECENT_MISSIONS)
     fun getRecentMissionsTitle(@Auth userId: Long): ResponseEntity<ApiResponseBody<List<MissionTitleResponse>>> {
         val data = missionService.findRecentMissionsTitle(userId)
+        return ResponseUtil.ok(data)
+    }
+
+    @GetMapping(MissionControllerPath.GET_DAILY_MISSION)
+    fun getDailyMissionDetail(
+        @PathVariable dailyMissionId: Long,
+        @Auth userId: Long
+    ): ResponseEntity<ApiResponseBody<DailyMissionDetailResponse>> {
+        val data = missionService.getDailyMissionDetail(dailyMissionId = dailyMissionId, userId = userId)
         return ResponseUtil.ok(data)
     }
 }

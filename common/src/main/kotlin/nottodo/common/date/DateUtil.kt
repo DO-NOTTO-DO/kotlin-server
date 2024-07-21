@@ -2,6 +2,8 @@ package nottodo.common.date
 
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.YearMonth
+import java.time.format.DateTimeParseException
 
 object DateUtil {
 
@@ -13,5 +15,21 @@ object DateUtil {
         return generateSequence(start) { date ->
             if (date.isBefore(end)) date.plusDays(1) else null
         }.toList()
+    }
+
+    fun getFirstDayOfMonth(yearMonth: String): LocalDate {
+        try {
+            return YearMonth.parse(yearMonth).atDay(1)
+        } catch (e: DateTimeParseException) {
+            throw IllegalArgumentException("월의 형식은 'yyyy-MM' 형태여야 합니다.")
+        }
+    }
+
+    fun getLastDayOfMonth(yearMonth: String): LocalDate {
+        try {
+            return YearMonth.parse(yearMonth).atEndOfMonth()
+        } catch (e: DateTimeParseException) {
+            throw IllegalArgumentException("월의 형식은 'yyyy-MM' 형태여야 합니다.")
+        }
     }
 }

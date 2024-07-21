@@ -43,6 +43,23 @@ class DailyMissionService(
             .map { date -> calculateCompletionStatus(date, dateToDailyMissions[date]) }
     }
 
+    @Transactional(readOnly = true)
+    fun getMonthlyMissionCompletionRates(
+        yearMonthInput: String,
+        userId: Long
+    ): List<DailyMissionCompletionStatusResponse> {
+        val startDate = DateUtil.getFirstDayOfMonth(yearMonthInput)
+        val endDate = DateUtil.getLastDayOfMonth(yearMonthInput)
+        val dailyMissions = dailyMissionQueryRepository.findByUserIdAndDatesBetween(
+            userId = userId,
+            startDate = startDate,
+            endDate = endDate
+        )
+        val dateToDailyMissions = dailyMissions.groupBy { it.date }
+        return DateUtil.getDatesBetween(startDate, endDate)
+            .map { date -> calculateCompletionStatus(date, dateToDailyMissions[date]) }
+    }
+
     private fun calculateCompletionStatus(
         date: LocalDate,
         dailyMissions: List<DailyMission>?
@@ -62,9 +79,10 @@ class DailyMissionService(
         userId: Long
     ): DailyMissionResponse {
         val dailyMission =
-            dailyMissionRepository.findByIdOrNull(dailyMissionId) ?: throw CustomNotFoundException("미션을 찾을 수 없습니다.")
-        if (dailyMission.mission.userId != userId) throw CustomBadRequestException("사용자의 미션이 아닙니다.")
-        val updatedDailyMission = dailyMissionRepository.save(dailyMission.changeCompletionStatus(request.completionStatus))
+            dailyMissionRepository.findByIdOrNull(dailyMissionId) ?: throw CustomNotFoundException("해당 id의 낫투두가 없습니다.")
+        if (dailyMission.mission.userId != userId) throw CustomBadRequestException("사용자의 낫투두가 아닙니다.")
+        val updatedDailyMission =
+            dailyMissionRepository.save(dailyMission.changeCompletionStatus(request.completionStatus))
         return DailyMissionResponse.from(updatedDailyMission)
     }
 }

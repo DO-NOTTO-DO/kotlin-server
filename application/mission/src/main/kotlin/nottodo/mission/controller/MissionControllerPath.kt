@@ -7,4 +7,5 @@ object MissionControllerPath {
     const val UPDATE_DAILY_MISSION_COMPLETION_STATUS = "api/v1/mission/{dailyMissionId}/check"
     const val GET_DAILY_MISSION = "api/v1/mission/{dailyMissionId}"
     const val GET_RECENT_MISSIONS = "api/v1/mission/recent"
+    const val GET_MONTHLY_COMPLETION_STATE = "api/v1/mission/month/{month}"
 }
