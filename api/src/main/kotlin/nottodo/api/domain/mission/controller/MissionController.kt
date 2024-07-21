@@ -6,12 +6,12 @@ import nottodo.commonspring.dto.response.ResponseUtil
 import nottodo.mission.controller.MissionControllerPath
 import nottodo.mission.request.DailyMissionUpdateCompletionStatusRequest
 import nottodo.mission.request.MissionCreateRequest
+import nottodo.mission.request.MissionDuplicateRequest
 import nottodo.mission.request.MissionUpdateRequest
 import nottodo.mission.response.DailyMissionCompletionStatusResponse
 import nottodo.mission.response.DailyMissionDetailResponse
 import nottodo.mission.response.DailyMissionResponse
 import nottodo.mission.response.MissionTitleResponse
-import nottodo.mission.service.DailyMissionService
 import nottodo.mission.service.MissionService
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
@@ -22,7 +22,6 @@ import java.time.LocalDate
 
 @RestController
 class MissionController(
-    private val dailyMissionService: DailyMissionService,
     private val missionService: MissionService,
 ) {
 
@@ -31,7 +30,7 @@ class MissionController(
         @PathVariable date: LocalDate,
         @Auth userId: Long
     ): ResponseEntity<ApiResponseBody<List<DailyMissionResponse>>> {
-        val data = dailyMissionService.getTodayDailyMissions(date = date, userId = userId)
+        val data = missionService.getTodayDailyMissions(date = date, userId = userId)
         return ResponseUtil.ok(data)
     }
 
@@ -50,7 +49,7 @@ class MissionController(
         @PathVariable startDate: LocalDate,
         @Auth userId: Long
     ): ResponseEntity<ApiResponseBody<List<DailyMissionCompletionStatusResponse>>> {
-        val data = dailyMissionService.getWeeklyMissionCompletionRates(startDate = startDate, userId = userId)
+        val data = missionService.getWeeklyMissionCompletionRates(startDate = startDate, userId = userId)
         return ResponseUtil.ok(data)
     }
 
@@ -59,7 +58,7 @@ class MissionController(
         @PathVariable month: String,
         @Auth userId: Long
     ): ResponseEntity<ApiResponseBody<List<DailyMissionCompletionStatusResponse>>> {
-        val data = dailyMissionService.getMonthlyMissionCompletionRates(yearMonthInput = month, userId = userId)
+        val data = missionService.getMonthlyMissionCompletionRates(yearMonthInput = month, userId = userId)
         return ResponseUtil.ok(data)
     }
 
@@ -69,7 +68,7 @@ class MissionController(
         @RequestBody request: DailyMissionUpdateCompletionStatusRequest,
         @Auth userId: Long
     ): ResponseEntity<ApiResponseBody<DailyMissionResponse>> {
-        val data = dailyMissionService.updateDailyMissionCompletionStatus(
+        val data = missionService.updateDailyMissionCompletionStatus(
             dailyMissionId = dailyMissionId,
             request = request,
             userId = userId
@@ -101,14 +100,14 @@ class MissionController(
         @PathVariable dailyMissionId: Long,
         @Auth userId: Long
     ): ResponseEntity<ApiResponseBody<List<String>>> {
-        val data = dailyMissionService.getDailyMissionPlanDates(dailyMissionId = dailyMissionId, userId = userId)
+        val data = missionService.getDailyMissionPlanDates(dailyMissionId = dailyMissionId, userId = userId)
         return ResponseUtil.ok(data)
     }
 
     @PutMapping(MissionControllerPath.UPDATE_MISSION)
     fun updateMission(
         @PathVariable dailyMissionId: Long,
-        @RequestBody request: MissionUpdateRequest,
+        @Validated @RequestBody request: MissionUpdateRequest,
         @Auth userId: Long
     ): ResponseEntity<ApiResponseBody<Nothing>> {
         missionService.updateMission(dailyMissionId = dailyMissionId, request = request, userId = userId)
@@ -117,8 +116,22 @@ class MissionController(
     }
 
     @DeleteMapping(MissionControllerPath.DELETE_DAILY_MISSION)
-    fun deleteDailyMission(@PathVariable dailyMissionId: Long, @Auth userId: Long): ResponseEntity<ApiResponseBody<Nothing>> {
-        dailyMissionService.deleteDailyMission(dailyMissionId = dailyMissionId, userId = userId)
+    fun deleteDailyMission(
+        @PathVariable dailyMissionId: Long,
+        @Auth userId: Long
+    ): ResponseEntity<ApiResponseBody<Nothing>> {
+        missionService.deleteDailyMission(dailyMissionId = dailyMissionId, userId = userId)
         return ResponseUtil.ok(null)
+    }
+
+    @PostMapping(MissionControllerPath.DUPLICATE_MISSION)
+    fun duplicateMission(
+        @PathVariable dailyMissionId: Long,
+        @Validated @RequestBody request: MissionDuplicateRequest,
+        @Auth userId: Long
+    ): ResponseEntity<ApiResponseBody<Nothing>> {
+        missionService.duplicateMission(dailyMissionId = dailyMissionId, request = request, userId = userId)
+        val uri = URI.create("/")
+        return ResponseUtil.created(data = null, uri = uri)
     }
 }

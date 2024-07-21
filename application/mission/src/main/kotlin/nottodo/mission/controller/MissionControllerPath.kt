@@ -11,4 +11,5 @@ object MissionControllerPath {
     const val GET_DAILY_MISSION_PLAN_DATES = "api/v1/mission/{dailyMissionId}/dates"
     const val UPDATE_MISSION = "api/v1/mission/{dailyMissionId}"
     const val DELETE_DAILY_MISSION = "api/v1/mission/{dailyMissionId}"
+    const val DUPLICATE_MISSION ="api/v1/mission/{dailyMissionId}"
 }
