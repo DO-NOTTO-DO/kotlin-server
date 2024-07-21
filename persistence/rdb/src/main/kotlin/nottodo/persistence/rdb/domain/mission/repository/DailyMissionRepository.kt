@@ -15,4 +15,5 @@ interface DailyMissionRepository : JpaRepository<DailyMission, Long> {
     fun findByUserIdAndDates(userId: Long, dates: List<LocalDate>): List<DailyMission>
 
     fun findAllByMissionIn(missions: List<Mission>): List<DailyMission>
+    fun findAllByMission(mission: Mission): List<DailyMission>
 }

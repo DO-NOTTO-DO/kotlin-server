@@ -3,6 +3,7 @@ package nottodo.common.date
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
 object DateUtil {
@@ -31,5 +32,10 @@ object DateUtil {
         } catch (e: DateTimeParseException) {
             throw IllegalArgumentException("월의 형식은 'yyyy-MM' 형태여야 합니다.")
         }
+    }
+
+    fun formatLocalDate(date: LocalDate): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+        return date.format(formatter)
     }
 }

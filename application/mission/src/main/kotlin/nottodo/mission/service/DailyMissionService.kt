@@ -85,4 +85,13 @@ class DailyMissionService(
             dailyMissionRepository.save(dailyMission.changeCompletionStatus(request.completionStatus))
         return DailyMissionResponse.from(updatedDailyMission)
     }
+
+    @Transactional(readOnly = true)
+    fun getDailyMissionPlanDates(dailyMissionId: Long, userId: Long): List<String> {
+        val dailyMission =
+            dailyMissionRepository.findByIdOrNull(dailyMissionId) ?: throw CustomNotFoundException("해당 id의 낫투두가 없습니다.")
+        if (dailyMission.mission.userId != userId) throw CustomBadRequestException("사용자의 낫투두가 아닙니다.")
+        val sameDailyMissions = dailyMissionRepository.findAllByMission(dailyMission.mission)
+        return sameDailyMissions.map { DateUtil.formatLocalDate(it.date) }
+    }
 }

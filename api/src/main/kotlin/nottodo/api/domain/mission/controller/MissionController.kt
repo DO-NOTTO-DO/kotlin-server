@@ -93,4 +93,13 @@ class MissionController(
         val data = missionService.getDailyMissionDetail(dailyMissionId = dailyMissionId, userId = userId)
         return ResponseUtil.ok(data)
     }
+
+    @GetMapping(MissionControllerPath.GET_DAILY_MISSION_PLAN_DATES)
+    fun getDailyMissionPlanDates(
+        @PathVariable dailyMissionId: Long,
+        @Auth userId: Long
+    ): ResponseEntity<ApiResponseBody<List<String>>> {
+        val data = dailyMissionService.getDailyMissionPlanDates(dailyMissionId = dailyMissionId, userId = userId)
+        return ResponseUtil.ok(data)
+    }
 }
